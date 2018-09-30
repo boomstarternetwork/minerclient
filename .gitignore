@@ -2,3 +2,4 @@ vendor/
 bin/
 minerclient
 minerclient.exe
+release/
