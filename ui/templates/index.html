@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>minerclient</title>
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+</head>
+<body data-projects="{{.}}">
+    <h1>minerclient</h1>
+    <form method="POST" action="/start">
+        <select name="project-id">
+            {{range .Projects}}
+                <option value="{{.ID}}" {{if eq .ID $.ProjectID}}selected{{end}}>{{.Name}}</option>
+            {{end}}
+        </select>
+        <select name="currency">
+            {{range .Currencies}}
+                <option value="{{.ID}}" {{if eq .ID $.Currency}}selected{{end}}>{{.Name}}</option>
+            {{end}}
+        </select>
+        <input type="text" name="address" placeholder="Address" value="{{.Address}}" size="30"/>
+        <input type="text" name="worker" placeholder="Worker" value="{{.Worker}}" size="6"/>
+        <button type="submit">Start mining</button>
+    </form>
+</body>
+</html>

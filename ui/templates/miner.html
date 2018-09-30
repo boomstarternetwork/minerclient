@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>minerclient</title>
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+    <style>
+        p {
+            margin: 0;
+            padding: 0;
+        }
+        p.error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>minerclient :: miner</h1>
+    <h2>{{.Project.Name}} / {{.Currency }} / {{ .Address}}{{if .Worker}} / {{.Worker}}{{end}}</h2>
+    <form method="POST" action="/stop">
+        <input type="hidden" name="project-id" value="{{.Project.ID}}" />
+        <button type="submit">Stop</button>
+    </form>
+    <h2>Log:</h2>
+    <div id="output"></div>
+    <script src="/js/jquery.js"></script>
+    <script>
+        $(function() {
+            var output = $("#output");
+
+            ws = new WebSocket("ws://"+window.location.host+"/miner/output");
+
+            ws.onopen = function() {
+                console.log('Connected')
+            };
+
+            ws.onmessage = function(event) {
+                output.prepend(event.data)
+                if (output.children().length > 30) {
+                    output.children().last().remove()
+                }
+            };
+        });
+    </script>
+</body>
+</html>
