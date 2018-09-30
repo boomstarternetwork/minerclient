@@ -2,4 +2,4 @@
 
 package cpuminer
 
-const path = `bin\cpuminer.exe`
+const path = `cpuminer.exe`

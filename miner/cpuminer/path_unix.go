@@ -2,4 +2,4 @@
 
 package cpuminer
 
-const path = `bin/cpuminer`
+const path = `cpuminer`

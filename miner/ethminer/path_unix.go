@@ -2,4 +2,4 @@
 
 package ethminer
 
-const path = `bin/ethminer`
+const path = `ethminer`

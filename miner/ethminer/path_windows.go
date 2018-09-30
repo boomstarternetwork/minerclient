@@ -2,4 +2,4 @@
 
 package ethminer
 
-const path = `bin\ethiner.exe`
+const path = `ethminer.exe`
