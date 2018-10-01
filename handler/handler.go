@@ -106,6 +106,7 @@ func (h *Handler) Start(c echo.Context) error {
 
 	curr, err := currency.Parse(c.FormValue("currency"))
 	if err != nil {
+		c.Logger().Errorf("Failed to parse currency: %v", err)
 		return c.Render(http.StatusBadRequest, "400",
 			err.Error()+", code=1")
 	}
@@ -119,11 +120,13 @@ func (h *Handler) Start(c echo.Context) error {
 		Worker:   c.FormValue("worker"),
 	})
 	if err != nil {
+		c.Logger().Errorf("Failed to set miner params: %v", err)
 		return c.Render(http.StatusBadRequest, "400",
 			err.Error()+", code=2")
 	}
 
 	if err := h.miner.Start(); err != nil {
+		c.Logger().Errorf("Failed to start miner: %v", err)
 		return c.Render(http.StatusInternalServerError, "500", 3)
 	}
 
@@ -207,6 +210,7 @@ func (h *Handler) MinerOutput(c echo.Context) error {
 				ws.Write([]byte(
 					fmt.Sprintf(`<p class="error">%s</p>`, err)))
 			case <-stop:
+				c.Logger().Info("Miner stopped")
 				return
 			}
 		}
