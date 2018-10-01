@@ -7,11 +7,10 @@ import (
 	"net/http"
 	"net/url"
 
-	"golang.org/x/net/websocket"
-
 	"bitbucket.org/boomstarternetwork/minerclient/currency"
 	"bitbucket.org/boomstarternetwork/minerclient/miner"
 	"github.com/labstack/echo"
+	"golang.org/x/net/websocket"
 )
 
 type Handler struct {
@@ -56,11 +55,13 @@ type indexPageData struct {
 func (h *Handler) Index(c echo.Context) error {
 	httpsRes, err := http.Get(projectsURL)
 	if err != nil {
+		c.Logger().Errorf("Failed to http get projects URL: %v", err)
 		return c.Render(http.StatusInternalServerError, "500", 1)
 	}
 
 	resJSON, err := ioutil.ReadAll(httpsRes.Body)
 	if err != nil {
+		c.Logger().Errorf("Failed to read projects response body: %v", err)
 		return c.Render(http.StatusInternalServerError, "500", 2)
 	}
 
@@ -69,6 +70,8 @@ func (h *Handler) Index(c echo.Context) error {
 	json.Unmarshal(resJSON, &res)
 
 	if res.Error != "" {
+		c.Logger().Errorf("Projects response error field is not empty: %s",
+			res.Error)
 		return c.Render(http.StatusInternalServerError, "500", 3)
 	}
 
@@ -180,16 +183,19 @@ func (h *Handler) Miner(c echo.Context) error {
 func (h *Handler) MinerOutput(c echo.Context) error {
 	lines, err := h.miner.ListenOutput()
 	if err != nil {
+		c.Logger().Errorf("Miner listen output error: %v", err)
 		return c.Render(http.StatusNotFound, "404", "code=1")
 	}
 
 	errs, err := h.miner.ListenErrors()
 	if err != nil {
+		c.Logger().Errorf("Miner listen errors error: %v", err)
 		return c.Render(http.StatusNotFound, "404", "code=2")
 	}
 
 	stop, err := h.miner.ListenStop()
 	if err != nil {
+		c.Logger().Errorf("Miner listen stop error: %v", err)
 		return c.Render(http.StatusNotFound, "404", "code=3")
 	}
 
