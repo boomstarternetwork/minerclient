@@ -117,10 +117,10 @@ func (h *Handler) Start(c echo.Context) error {
 	h.miner.Stop()
 
 	err = h.miner.SetParams(miner.Params{
-		Currency: curr,
-		Address:  c.FormValue("address"),
-		Project:  projectID,
-		Worker:   c.FormValue("worker"),
+		Currency:  curr,
+		Address:   c.FormValue("address"),
+		ProjectID: projectID,
+		Worker:    c.FormValue("worker"),
 	})
 	if err != nil {
 		c.Logger().Errorf("Failed to set miner params: %v", err)
@@ -166,12 +166,12 @@ type minerPageData struct {
 func (h *Handler) Miner(c echo.Context) error {
 	mp := h.miner.Params()
 
-	projectName, _ := h.projects[mp.Project]
+	projectName, _ := h.projects[mp.ProjectID]
 
 	return c.Render(http.StatusOK, "miner",
 		minerPageData{
 			Project: project{
-				ID:   mp.Project,
+				ID:   mp.ProjectID,
 				Name: projectName,
 			},
 			Currency: mp.Currency.String(),

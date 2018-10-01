@@ -43,7 +43,7 @@ func (m *ethminer) Start() error {
 		m.Stop()
 	}
 
-	login := m.params.Address + "." + m.params.Project
+	login := m.params.Address + "." + m.params.ProjectID
 	if len(m.params.Worker) > 0 {
 		login = login + "." + m.params.Worker
 	}
@@ -176,7 +176,7 @@ func validateParams(p miner.Params) error {
 		return errors.New("address shouldn't be empty")
 	}
 
-	if p.Project == "" {
+	if p.ProjectID == "" {
 		return errors.New("project shouldn't be empty")
 	}
 

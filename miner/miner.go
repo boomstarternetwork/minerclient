@@ -33,10 +33,10 @@ func PoolAddr(c currency.Currency) (string, error) {
 }
 
 type Params struct {
-	Currency currency.Currency
-	Address  string
-	Project  string
-	Worker   string
+	Currency  currency.Currency
+	Address   string
+	ProjectID string
+	Worker    string
 }
 
 type Miner interface {

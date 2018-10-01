@@ -48,7 +48,7 @@ func (m *cpuminer) Start() error {
 		m.Stop()
 	}
 
-	user := m.params.Address + "." + m.params.Project
+	user := m.params.Address + "." + m.params.ProjectID
 	if len(m.params.Worker) > 0 {
 		user = user + "." + m.params.Worker
 	}
@@ -198,7 +198,7 @@ func validateParams(p miner.Params) error {
 		return errors.New("address shouldn't be empty")
 	}
 
-	if p.Project == "" {
+	if p.ProjectID == "" {
 		return errors.New("project shouldn't be empty")
 	}
 
