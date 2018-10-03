@@ -3,6 +3,7 @@ package cpuminer
 import (
 	"bufio"
 	"errors"
+	"os"
 	"os/exec"
 	"runtime"
 	"strconv"
@@ -126,12 +127,11 @@ func (m *cpuminer) Start() error {
 			m.errors <- err
 		}
 
-		close(m.output)
-		close(m.errors)
-
-		// wait until channels above closes are handled
+		// wait until possible errors above are handled
 		time.Sleep(1 * time.Second)
 
+		close(m.output)
+		close(m.errors)
 		close(m.stop)
 
 		m.output = nil
@@ -148,9 +148,14 @@ func (m *cpuminer) Stop() {
 	if m.cmd == nil {
 		return
 	}
-	// We are killing process because windows doesn't support any kind of
-	// interrupt signals for graceful shutdown.
-	m.cmd.Process.Kill()
+	if runtime.GOOS == "windows" {
+		// We are killing process because windows doesn't support any kind of
+		// interrupt signals for graceful shutdown.
+		m.cmd.Process.Kill()
+	} else {
+		// For other systems it is ok to send interrupt signal.
+		m.cmd.Process.Signal(os.Interrupt)
+	}
 }
 
 func (m *cpuminer) ListenOutput() (chan string, error) {

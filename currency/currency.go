@@ -1,19 +1,41 @@
 package currency
 
 import (
-	"github.com/getlantern/errors"
+	"errors"
+	"strings"
 )
 
-type Currency string
+type Currency int
 
 const (
-	Bitcoin     Currency = "bitcoin"
-	BitcoinCash Currency = "bitcoin-cash"
-	Dash        Currency = "dash"
-	Ethereum    Currency = "ethereum"
-	Litecoin    Currency = "litecoin"
-	Unknown     Currency = ""
+	Unknown Currency = iota
+	Bitcoin
+	BitcoinCash
+	Dash
+	Ethereum
+	Litecoin
 )
+
+func (c Currency) ID() string {
+	switch c {
+	case Bitcoin:
+		return "bitcoin"
+	case BitcoinCash:
+		return "bitcoin-cash"
+	case Dash:
+		return "dash"
+	case Ethereum:
+		return "ethereum"
+	case Litecoin:
+		return "litecoin"
+	default:
+		return "unknown"
+	}
+}
+
+func (c Currency) Name() string {
+	return c.String()
+}
 
 func (c Currency) String() string {
 	switch c {
@@ -32,21 +54,26 @@ func (c Currency) String() string {
 	}
 }
 
-func Parse(s string) (Currency, error) {
+func ParseID(s string) (Currency, error) {
 	switch s {
-	case string(Bitcoin):
+	case Bitcoin.ID():
 		return Bitcoin, nil
-	case string(BitcoinCash):
+	case BitcoinCash.ID():
 		return BitcoinCash, nil
-	case string(Dash):
+	case Dash.ID():
 		return Dash, nil
-	case string(Ethereum):
+	case Ethereum.ID():
 		return Ethereum, nil
-	case string(Litecoin):
+	case Litecoin.ID():
 		return Litecoin, nil
 	default:
-		return Unknown, errors.New("unknown currency")
+		return Unknown, errors.New("unknown currency: " + s)
 	}
+}
+
+func (c *Currency) UnmarshalJSON(b []byte) (err error) {
+	*c, err = ParseID(strings.Trim(string(b), `"`))
+	return err
 }
 
 func List() []Currency {
@@ -57,4 +84,20 @@ func List() []Currency {
 		Ethereum,
 		Litecoin,
 	}
+}
+
+type Data struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+func ListData() []Data {
+	var ds []Data
+	for _, c := range List() {
+		ds = append(ds, Data{
+			ID:   c.ID(),
+			Name: c.Name(),
+		})
+	}
+	return ds
 }

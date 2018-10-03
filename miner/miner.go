@@ -5,7 +5,7 @@ import (
 	"github.com/getlantern/errors"
 )
 
-const PoolBaseAddr = "127.0.0.1"
+const PoolBaseAddr = "192.168.1.132"
 
 const (
 	BitcoinPoolAddr     = PoolBaseAddr + ":3000"
@@ -33,9 +33,9 @@ func PoolAddr(c currency.Currency) (string, error) {
 }
 
 type Params struct {
+	ProjectID string
 	Currency  currency.Currency
 	Address   string
-	ProjectID string
 	Worker    string
 }
 

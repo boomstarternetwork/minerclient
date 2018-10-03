@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>minerclient</title>
+    <link rel="stylesheet" href="static/css/index.css" />
+</head>
+<body>
+
+    <div class="app">
+
+        <div>
+            <select data-bind="
+                options: projects,
+                optionsText: 'name',
+                optionsValue: 'id',
+                optionsCaption: 'Choose project',
+                value: project,
+                disable: mining"></select>
+
+            <select data-bind="
+                options: currencies,
+                optionsText: 'name',
+                optionsValue: 'id',
+                optionsCaption: 'Choose currency',
+                value: currency,
+                disable: mining"></select>
+
+            <input type="text" placeholder="Type your address" size="50"
+                data-bind="
+                    textInput: address,
+                    disable: mining"/>
+
+            <input type="text" placeholder="Type your worker" size="15"
+                data-bind="
+                    textInput: worker,
+                    disable: mining"/>
+
+            <button data-bind="
+                click: startMining,
+                enable: mineable,
+                visible: !mining()">Start mining</button>
+
+            <button data-bind="
+                click: stopMining,
+                visible: mining">Stop mining</button>
+        </div>
+
+        <div class="log" data-bind="foreach: logLines">
+            <p data-bind="
+                text: $data.text,
+                css:{ error: $data.type === 'err'}"></p>
+        </div>
+
+    </div>
+
+    <script src="static/js/knockout.js"></script>
+    <script src="static/js/index.js"></script>
+</body>
+
+</html>

@@ -112,12 +112,11 @@ func (m *ethminer) Start() error {
 			m.errors <- err
 		}
 
-		close(m.output)
-		close(m.errors)
-
-		// wait until channels above closes are handled
+		// wait until possible errors above are handled
 		time.Sleep(1 * time.Second)
 
+		close(m.output)
+		close(m.errors)
 		close(m.stop)
 
 		m.output = nil
