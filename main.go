@@ -5,12 +5,12 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"bitbucket.org/boomstarternetwork/minerclient/currency"
-	"bitbucket.org/boomstarternetwork/minerclient/miner"
-	"bitbucket.org/boomstarternetwork/minerclient/miner/minersBundle"
 	"github.com/asticode/go-astilectron"
 	"github.com/asticode/go-astilectron-bootstrap"
 	"github.com/asticode/go-astilog"
+	"github.com/boomstarternetwork/minerclient/currency"
+	"github.com/boomstarternetwork/minerclient/miner"
+	"github.com/boomstarternetwork/minerclient/miner/minersBundle"
 	"github.com/pkg/errors"
 )
 

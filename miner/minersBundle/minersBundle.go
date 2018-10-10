@@ -3,10 +3,10 @@ package minersBundle
 import (
 	"errors"
 
-	"bitbucket.org/boomstarternetwork/minerclient/currency"
-	"bitbucket.org/boomstarternetwork/minerclient/miner"
-	"bitbucket.org/boomstarternetwork/minerclient/miner/cpuminer"
-	"bitbucket.org/boomstarternetwork/minerclient/miner/ethminer"
+	"github.com/boomstarternetwork/minerclient/currency"
+	"github.com/boomstarternetwork/minerclient/miner"
+	"github.com/boomstarternetwork/minerclient/miner/cpuminer"
+	"github.com/boomstarternetwork/minerclient/miner/ethminer"
 )
 
 type minersBundle struct {

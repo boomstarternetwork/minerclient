@@ -1,7 +1,7 @@
 package miner
 
 import (
-	"bitbucket.org/boomstarternetwork/minerclient/currency"
+	"github.com/boomstarternetwork/minerclient/currency"
 	"github.com/getlantern/errors"
 )
 

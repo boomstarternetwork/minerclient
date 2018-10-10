@@ -10,8 +10,8 @@ import (
 	"sync"
 	"time"
 
-	"bitbucket.org/boomstarternetwork/minerclient/currency"
-	"bitbucket.org/boomstarternetwork/minerclient/miner"
+	"github.com/boomstarternetwork/minerclient/currency"
+	"github.com/boomstarternetwork/minerclient/miner"
 )
 
 type ethminer struct {

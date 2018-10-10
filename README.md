@@ -1,6 +1,6 @@
 # minerclient
 
-It is miner client web server app dedicated to work with [minerserver](https://bitbucket.org/boomstarternetwork/minerserver/).
+It is miner client web server app dedicated to work with [minerserver](https://github.com/boomstarternetwork/minerserver/).
 
 It wraps `cpuminer` and `ethminer` internally and uses them to mine
 cryptocurrencies.
