@@ -5,7 +5,7 @@ import (
 	"github.com/getlantern/errors"
 )
 
-const PoolBaseAddr = "192.168.1.132"
+const PoolBaseAddr = "18.195.144.235"
 
 const (
 	BitcoinPoolAddr     = PoolBaseAddr + ":3000"

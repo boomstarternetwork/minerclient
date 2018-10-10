@@ -14,7 +14,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-const minerserverAddr = "192.168.1.132:8080"
+const minerserverAddr = "18.195.144.235:8080"
 
 var m miner.Miner
 
