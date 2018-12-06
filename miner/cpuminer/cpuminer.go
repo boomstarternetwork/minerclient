@@ -65,7 +65,7 @@ func (m *cpuminer) Start() error {
 	}
 
 	m.cmd = exec.Command(path,
-		"-a", m.algrorithm(),
+		"-a", m.algorithm(),
 		"-t", strconv.Itoa(CPUCount),
 		"-o", "stratum+tcp://"+poolAddr,
 		"-u", user,
@@ -179,7 +179,7 @@ func (m *cpuminer) ListenStop() (chan struct{}, error) {
 	return m.stop, nil
 }
 
-func (m *cpuminer) algrorithm() string {
+func (m *cpuminer) algorithm() string {
 	switch m.params.Currency {
 	case currency.Bitcoin, currency.BitcoinCash:
 		return sha256d
