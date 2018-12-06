@@ -1,8 +1,9 @@
 package miner
 
 import (
+	"errors"
+
 	"github.com/boomstarternetwork/minerclient/currency"
-	"github.com/getlantern/errors"
 )
 
 const PoolBaseAddr = "18.195.144.235"
@@ -43,7 +44,7 @@ type Miner interface {
 	Params() Params
 	SetParams(p Params) error
 	Start() error
-	Stop()
+	Stop() error
 	ListenOutput() (chan string, error)
 	ListenErrors() (chan error, error)
 	ListenStop() (chan struct{}, error)

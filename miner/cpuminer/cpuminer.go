@@ -144,17 +144,17 @@ func (m *cpuminer) Start() error {
 	return nil
 }
 
-func (m *cpuminer) Stop() {
+func (m *cpuminer) Stop() error {
 	if m.cmd == nil {
-		return
+		return nil
 	}
 	if runtime.GOOS == "windows" {
 		// We are killing process because windows doesn't support any kind of
 		// interrupt signals for graceful shutdown.
-		m.cmd.Process.Kill()
+		return m.cmd.Process.Kill()
 	} else {
 		// For other systems it is ok to send interrupt signal.
-		m.cmd.Process.Signal(os.Interrupt)
+		return m.cmd.Process.Signal(os.Interrupt)
 	}
 }
 

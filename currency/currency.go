@@ -78,11 +78,11 @@ func (c *Currency) UnmarshalJSON(b []byte) (err error) {
 
 func List() []Currency {
 	return []Currency{
-		Bitcoin,
-		BitcoinCash,
-		Dash,
+		// Bitcoin,
+		// BitcoinCash,
+		// Dash,
 		Ethereum,
-		Litecoin,
+		// Litecoin,
 	}
 }
 

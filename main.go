@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/asticode/go-astilectron"
-	"github.com/asticode/go-astilectron-bootstrap"
-	"github.com/asticode/go-astilog"
+	astilectron "github.com/asticode/go-astilectron"
+	bootstrap "github.com/asticode/go-astilectron-bootstrap"
+	astilog "github.com/asticode/go-astilog"
 	"github.com/boomstarternetwork/minerclient/currency"
 	"github.com/boomstarternetwork/minerclient/miner"
 	"github.com/boomstarternetwork/minerclient/miner/minersBundle"
@@ -29,6 +29,7 @@ func main() {
 		AstilectronOptions: astilectron.Options{
 			AppName:            "minerclient",
 			AppIconDefaultPath: "resources/icon.png",
+			AppIconDarwinPath:  "resources/icon.icns",
 		},
 		RestoreAssets: RestoreAssets,
 		Windows: []*bootstrap.Window{{
@@ -49,7 +50,11 @@ func messageHandler(w *astilectron.Window, msg bootstrap.MessageIn) (interface{}
 	switch msg.Name {
 	case "getProjects":
 		astilog.Info("getProjects js message")
-		return getProjects()
+		ps, err := getProjects()
+		if err != nil {
+			return err.Error(), err
+		}
+		return ps, nil
 	case "getCurrencies":
 		astilog.Info("getCurrencies js message")
 		return currency.ListData(), nil
@@ -102,7 +107,11 @@ func getProjects() ([]project, error) {
 
 	res := projectsResponse{}
 
-	json.Unmarshal(resJSON, &res)
+	err = json.Unmarshal(resJSON, &res)
+	if err != nil {
+		astilog.Errorf("Failed to unmarshal response JSON: %v", err)
+		return nil, err
+	}
 
 	if res.Error != "" {
 		err := errors.New(res.Error)
@@ -152,7 +161,7 @@ func startMining(w *astilectron.Window, p miner.Params) error {
 					continue
 				}
 				lineJSON, _ := json.Marshal(line)
-				w.SendMessage(bootstrap.MessageIn{
+				_ = w.SendMessage(bootstrap.MessageIn{
 					Name:    "logLine",
 					Payload: json.RawMessage(lineJSON),
 				})
@@ -161,7 +170,7 @@ func startMining(w *astilectron.Window, p miner.Params) error {
 					continue
 				}
 				errJSON, _ := json.Marshal(err.Error())
-				w.SendMessage(bootstrap.MessageIn{
+				_ = w.SendMessage(bootstrap.MessageIn{
 					Name:    "error",
 					Payload: json.RawMessage(errJSON),
 				})

@@ -60,14 +60,15 @@ func (m *minersBundle) Start() error {
 	}
 }
 
-func (m *minersBundle) Stop() {
+func (m *minersBundle) Stop() error {
 	switch m.params.Currency {
 	case currency.Bitcoin, currency.BitcoinCash,
 		currency.Dash, currency.Litecoin:
-		m.cpuminer.Stop()
+		return m.cpuminer.Stop()
 	case currency.Ethereum:
-		m.ethminer.Stop()
+		return m.ethminer.Stop()
 	}
+	return errors.New("unknown currency")
 }
 
 func (m *minersBundle) ListenOutput() (chan string, error) {
